@@ -9,7 +9,7 @@ import gc
 app = Starlette(debug=False)
 
 sess = gpt2.start_tf_sess(threads=1)
-gpt2.load_gpt2(sess)
+gpt2.load_gpt2(sess, model_name=model_name)
 
 # Needed to avoid cross-domain issues
 response_header = {
@@ -35,7 +35,7 @@ async def homepage(request):
                              headers=response_header)
 
     text = gpt2.generate(sess,
-                         length=int(params.get('length', 100)),
+                         length=int(params.get('length', 60)),
                          temperature=float(params.get('temperature', 0.9)),
                          top_k=int(params.get('top_k', 0)),
                          top_p=float(params.get('top_p', 0)),
@@ -52,7 +52,7 @@ async def homepage(request):
         tf.reset_default_graph()
         sess.close()
         sess = gpt2.start_tf_sess(threads=1)
-        gpt2.load_gpt2(sess)
+        gpt2.load_gpt2(sess, model_name=model_name)
         generate_count = 0
 
     gc.collect()
