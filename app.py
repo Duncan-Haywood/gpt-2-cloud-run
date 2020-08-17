@@ -18,7 +18,9 @@ response_header = {
 
 generate_count = 0
 
-
+# This next part listens for http requests, 
+# reads the paramaters passed in, calls the gpt2_simple generate, 
+# and returns the generated text
 @app.route('/', methods=['GET', 'POST', 'HEAD'])
 async def homepage(request):
     global generate_count
