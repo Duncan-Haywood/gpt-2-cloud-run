@@ -6,11 +6,10 @@ import uvicorn
 import os
 import gc
 
-model_name = '124M'
 app = Starlette(debug=False)
 
 sess = gpt2.start_tf_sess(threads=1)
-gpt2.load_gpt2(sess, model_name=model_name)
+gpt2.load_gpt2(sess)
 
 # Needed to avoid cross-domain issues
 response_header = {
@@ -53,7 +52,7 @@ async def homepage(request):
         tf.reset_default_graph()
         sess.close()
         sess = gpt2.start_tf_sess(threads=1)
-        gpt2.load_gpt2(sess, model_name=model_name)
+        gpt2.load_gpt2(sess)
         generate_count = 0
 
     gc.collect()
