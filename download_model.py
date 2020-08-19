@@ -1,3 +1,4 @@
+# downloads the 124M model into a folder called "models" which it creates
 import os
 
 os.system('pip install gpt_2_simple')
